@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class Edit_activity extends AppCompatActivity {
 
+    //編集画面
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
