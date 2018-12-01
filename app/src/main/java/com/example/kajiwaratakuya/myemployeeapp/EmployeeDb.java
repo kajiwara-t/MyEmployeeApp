@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
 import android.util.Log;
 
 import java.io.File;
@@ -17,17 +16,18 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class EmployeeDb extends SQLiteOpenHelper {
-    private static String DB_NAME = "employee.db.zip";
-    private static int DB_VERSION;
+    private static String DB_ZIP_NAME = "employee.db.zip";
+    private static String DB_NAME = "employee.db";
+    private static int DB_VERSION = 1;
     static String SQLstring = null;
     private static Context mContext = null;
     private static final String TAG = "EmployeeDB";
 
-    private File mDatabasePath;
+    private final File mDatabasePath;
 
     //データベースを作成またはオープン
     public EmployeeDb(Context context) {
-        super(context,DB_NAME,null,DB_VERSION);
+        super(context, DB_NAME,null,DB_VERSION);
         mContext = context;
         mDatabasePath = context.getDatabasePath(DB_NAME);
         Log.d(TAG, "EmployeeDB_通過");
@@ -117,9 +117,9 @@ public class EmployeeDb extends SQLiteOpenHelper {
         try {
             //ZIPから解凍して結合;
             AssetManager assetManager = mContext.getResources().getAssets();
-            InputStream is = assetManager.open(DB_NAME,AssetManager.ACCESS_STREAMING);
+            InputStream inputStream = assetManager.open(DB_ZIP_NAME,AssetManager.ACCESS_STREAMING);
 
-            ZipInputStream zipInputStream = new ZipInputStream(is);
+            ZipInputStream zipInputStream = new ZipInputStream(inputStream);
             ZipEntry zipEntry = zipInputStream.getNextEntry();
 
             if (zipEntry != null) {
