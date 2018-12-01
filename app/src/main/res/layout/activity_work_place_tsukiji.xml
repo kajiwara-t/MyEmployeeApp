@@ -15,7 +15,13 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="現場（WHO）" />
+            android:text="現場（築地）" />
+
+        <ListView
+            android:id="@+id/work_place_tsukiji_ListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></ListView>
     </LinearLayout>
 
 
