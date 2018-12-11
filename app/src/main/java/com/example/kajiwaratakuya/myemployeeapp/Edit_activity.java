@@ -13,8 +13,8 @@ public class Edit_activity extends AppCompatActivity {
     private static EditText add_id;
     private static EditText addName;
     private static EditText addAge;
-    private static EditText AddBirthPlace;
-    private static EditText AddWorkPlace;
+    private static EditText addBirthPlace;
+    private static EditText addWorkPlace;
     Button addBtn;
     Button updateBtn;
     Button deleteBtn;
@@ -29,15 +29,17 @@ public class Edit_activity extends AppCompatActivity {
         add_id = (EditText)findViewById(R.id.id_text);
         addName = (EditText)findViewById(R.id.name_text);
         addAge = (EditText)findViewById(R.id.age_text);
-        AddBirthPlace = (EditText)findViewById(R.id.place_text);
-        AddWorkPlace = (EditText)findViewById(R.id.work_place_text);
+        addBirthPlace = (EditText)findViewById(R.id.place_text);
+        addWorkPlace = (EditText)findViewById(R.id.work_place_text);
         addBtn = (Button)findViewById(R.id.add_button);
         updateBtn = (Button)findViewById(R.id.update_button);
         deleteBtn = (Button)findViewById(R.id.delete_button);
 
+        //EmployeeDb employeeDb = new EmployeeDb(this);
+        //final SQLiteDatabase db = employeeDb.getReadableDatabase();
+        Test_EmployeeDB test_employeeDB = new Test_EmployeeDB(this);
+        final SQLiteDatabase db = test_employeeDB.getReadableDatabase();
 
-        EmployeeDb employeeDb = new EmployeeDb(this);
-        final SQLiteDatabase db = employeeDb.getReadableDatabase();
 
         //データベースへ追加
 
@@ -48,8 +50,8 @@ public class Edit_activity extends AppCompatActivity {
                 contentValues.put("_id",add_id.getText().toString());
                 contentValues.put("name",addName.getText().toString());
                 contentValues.put("age",addAge.getText().toString());
-                contentValues.put("birthplace",AddBirthPlace.getText().toString());
-                contentValues.put("workPlace",AddWorkPlace.getText().toString());
+                contentValues.put("birthplace",addBirthPlace.getText().toString());
+                contentValues.put("workPlace",addWorkPlace.getText().toString());
                 db.insert("employeeTable",null,contentValues);
             }
         });
@@ -61,6 +63,13 @@ public class Edit_activity extends AppCompatActivity {
             public void onClick(View view) {
                 String _id = add_id.getText().toString();
                 String name = addName.getText().toString();
+                String age = addAge.getText().toString();
+                String birthplace = addBirthPlace.getText().toString();
+                String workPlace = addWorkPlace.getText().toString();
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("name",name);
+                db.update("employee_Table",contentValues,"name=?",new String[]{name,age,birthplace,workPlace});
             }
         });
 
@@ -68,9 +77,11 @@ public class Edit_activity extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String deleteId = add_id.getText().toString();
                 String deleteName = addName.getText().toString();
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("name",addName.getText().toString());
+                contentValues.put("_id",add_id.getText().toString());
                 db.delete("employeeTable","name=?",new String[]{deleteName});
             }
         });
