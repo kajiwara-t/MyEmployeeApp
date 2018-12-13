@@ -58,7 +58,7 @@ public class Edit_activity extends AppCompatActivity {
 
         //データベース更新
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String _id = add_id.getText().toString();
@@ -67,9 +67,12 @@ public class Edit_activity extends AppCompatActivity {
                 String birthplace = addBirthPlace.getText().toString();
                 String workPlace = addWorkPlace.getText().toString();
 
-                ContentValues contentValues = new ContentValues();
+                ContentValues contentValues = new ContentValues(4);
                 contentValues.put("name",name);
-                db.update("employee_Table",contentValues,"name=?",new String[]{name,age,birthplace,workPlace});
+                contentValues.put("age",age);
+                contentValues.put("birthplace",birthplace);
+                contentValues.put("workPlace",workPlace);
+                db.update("employeeTable",contentValues,"_id=" +_id,null);
             }
         });
 

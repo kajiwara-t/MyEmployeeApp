@@ -21,7 +21,8 @@
         <activity android:name=".EmployeeList" />
         <activity android:name=".WorkPlaceOffice" />
         <activity android:name=".WorkPlaceTsukiji" />
-        <activity android:name=".WorkPlaceWho"></activity>
+        <activity android:name=".WorkPlaceWho" />
+        <activity android:name=".TestListActivity"></activity>
     </application>
 
 </manifest>

@@ -39,7 +39,7 @@ public class EmployeeDb extends SQLiteOpenHelper {
      */
 
     public void createEmptyDataBase() throws IOException {
-
+        Log.d(TAG, "createEmptyDataBase_開始");
         boolean dbExist = checkDataBaseExists();
 
         if (dbExist) {
@@ -80,7 +80,7 @@ public class EmployeeDb extends SQLiteOpenHelper {
      * @return 存在している場合 {@code true}
      */
     private boolean checkDataBaseExists() {
-
+        Log.d(TAG, "checkDataBaseExists_開始");
 
         String dbPath = mDatabasePath.getAbsolutePath();
 
@@ -89,7 +89,7 @@ public class EmployeeDb extends SQLiteOpenHelper {
             checkDb = SQLiteDatabase.openDatabase
                     (dbPath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
-
+            Log.d(TAG, "checkDataBaseExists_データベース存在なし");
             // データベースはまだ存在していない
         }
 
@@ -102,18 +102,21 @@ public class EmployeeDb extends SQLiteOpenHelper {
         int newVersion = DB_VERSION;
         if (oldVersion == newVersion) {
             // データベースは存在していて最新
+            Log.d(TAG, "checkDataBaseExists_データベース存在していて最新");
             checkDb.close();
             return true;
         }
         // データベースが存在していて最新ではないので削除
         File f = new File(dbPath);
         f.delete();
+        Log.d(TAG, "checkDataBaseExists_データベース存在しているが最新ではないので削除");
         return false;
     }
 
 
 
     private void unzipCopyDataBaseFromAsset() throws IOException{
+        Log.d(TAG, "unzipCopyDataBaseFromAsset_開始");
         try {
             //ZIPから解凍して結合;
             AssetManager assetManager = mContext.getResources().getAssets();
